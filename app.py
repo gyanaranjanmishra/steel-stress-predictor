@@ -42,10 +42,24 @@ steel_type = st.selectbox(
 )
 
 # Inputs
-strain = st.number_input("Strain", value=0.0)
-strain_rate = st.number_input("Strain Rate (1/s)", value=0.0)
-temperature = st.number_input("Temperature (°C)", value=25.0)
+with st.sidebar:
+    st.header("Input Parameters")
 
+    strain = st.slider("Strain", 0.0, 0.7, 0.1, 0.01)
+
+    strain_rate = st.selectbox(
+        "Strain Rate (1/s)",
+        [0.01, 0.1, 1.0]
+    )
+
+    temperature = st.slider("Temperature (°C)", 850, 1050, 900, 5)
+
+
+if not (0 <= strain <= 0.7):
+    st.error("Strain must be between 0 and 0.7")
+
+if not (850 <= temperature <= 1050):
+    st.error("Temperature must be between 850 and 1050")
 
 # ----------------------------
 # Prediction
@@ -66,4 +80,5 @@ if st.button("Predict Stress"):
         pred = model32.predict(X_scaled)[0][0]
 
     st.success("Prediction Complete!")
+
     st.write(f"### Predicted Stress: **{pred:.2f} MPa**")
