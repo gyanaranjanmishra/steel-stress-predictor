@@ -1,5 +1,7 @@
 streamlit
 numpy
 tensorflow
-scikit-learn
 pickle-mixin
+scikit-learn
+streamlit
+joblib
